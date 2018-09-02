@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="./animate.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      position: relative;
+      margin: 40px auto;
+      width: 310px;
+      overflow: hidden;
+    }
+
+    .box p {
+      position: absolute;
+      top: 0px;
+      width: 310px;
+      height: 370px;
+      background-color: rgba(0, 0, 0, .5);
+    }
+
+    .txt {
+      display: none;
+      font-size: 200px;
+      color: #fff;
+      position: absolute;
+      margin: 100px;
+      z-index: 1;
+      text-shadow: 0 0 10px gold;
+    }
+
+    .lei {
+      right: 0;
+      top: 0;
+    }
+
+    .shen {
+      right: 0;
+      bottom: 0;
+    }
+
+    .niu {
+      left: 0;
+      top: 0;
+    }
+
+    .bi {
+      left: 0;
+      bottom: 0;
+    }
+
+    .Thor {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+  <script src="jQuery-3.3.1.js"></script>
+  <script>
+    //https://blog.csdn.net/hsd2012/article/details/51644419 为什么用 mouseenter和mouseleave 的原因
+    $(function () {
+      $("#box p").hide();
+
+      //鼠标移入事件--动画
+      $("#box").mouseenter(function (e) {
+        //call改变this指向调用一下
+        var direction = getDirection.call(this, e);
+        if (direction == 0 || direction == 4) {
+          $("#box p").css("left", "-310px");
+          $("#box p").css("top", "0px");
+          $("#box p").show();
+          $("#box p").animate({ left: "0px" }, 400, "swing");
+
+        } else if (direction == 1) {
+          $("#box p").css("top", "-370px");
+          $("#box p").css("left", "0px");
+          $("#box p").show();
+          $("#box p").animate({ top: "0px" }, 400, "swing");
+
+        } else if (direction == 2) {
+          $("#box p").css("left", "310px");
+          $("#box p").css("top", "0px");
+          $("#box p").show();
+          $("#box p").animate({ left: "0px" }, 400, "swing");
+        } else if (direction == 3) {
+          $("#box p").css("top", "370px");
+          $("#box p").css("left", "0px");
+          $("#box p").show();
+          $("#box p").animate({ top: "0px" }, 400, "swing");
+        }
+      });
+
+      //鼠标移出事件--动画
+      $("#box").mouseleave(function (e) {
+        var that = this;//用于修改计时器回调函数this的指向问题
+        setTimeout(function () {
+          //call改变this指向调用一下
+          var direction = getDirection.call(this, e);
+
+          if (direction == 0 || direction == 4) {
+            $("#box p").stop();
+            $("#box p").animate({ left: "-370px" }, 300, "swing");
+          } else if (direction == 1) {
+            $("#box p").stop();
+            $("#box p").animate({ top: "-370px" }, 300, "swing");
+          } else if (direction == 2) {
+            $("#box p").stop();
+            $("#box p").animate({ left: "310px" }, 300, "swing");
+          } else if (direction == 3) {
+            $("#box p").stop();
+            $("#box p").animate({ top: "370px" }, 300, "swing");
+          }
+        }.bind(that), 200);
+
+      });
+      /**
+       * 功能： 获取鼠标从图片的那一方向的边移入、移出
+       * @param e  事件event对象
+       * @returns {number}
+       */
+      function getDirection(e) {
+        var x = (e.pageX - this.offsetLeft - (this.offsetWidth / 2)) *
+          (this.offsetWidth > this.offsetHeight ? (this.offsetHeight / this.offsetWidth) : 1);
+        var y = (e.pageY - this.offsetTop - (this.offsetHeight / 2)) *
+          (this.offsetHeight > this.offsetWidth ? (this.offsetWidth / this.offsetHeight) : 1);
+
+        var y1 = (e.pageY - this.offsetTop - (this.offsetHeight / 2));//其实没用到这个东西
+        var direction = Math.round(((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90);
+        return direction;
+      }
+
+      window.onkeydown = function (e) {
+        e = e || window.event;
+        //显示文字
+        if (e.keyCode == 49) {
+          $("body").css( "backgroundColor","#37322e");
+          $(".lei").show().addClass("animated zoomInDown");
+          $(".shen").show().addClass("animated zoomInRight");
+          $(".niu").show().addClass("animated zoomInLeft");
+          $(".bi").show().addClass("animated zoomInUp");
+          $(".box").hide();
+        }
+        //显示雷神
+        if (e.keyCode == 50) {
+          $("body").css( "backgroundColor","#37322e");
+          $(".Thor").show().addClass("animated zoomIn");
+          $(".box").hide();
+        }
+        //溜了
+        if (e.keyCode == 51) {
+          $(".box").show();
+          $("body").css( "backgroundColor","#fff");
+          $(".lei").hide(2000).addClass("animated zoomOutDown");
+          $(".shen").hide(2000).addClass("animated zoomOutRight");
+          $(".niu").hide(2000).addClass("animated zoomOutLeft");
+          $(".bi").hide(2000).addClass("animated zoomOutUp");
+          $(".Thor").hide(2000).addClass("animated zoomOut");
+        }
+      }
+
+        //跳转
+        $("#box p").click(function () {
+        window.location.href = "Readme.html";
+      })
+
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="bigbox">
+    <div id="box" class="box">
+      <img src="./images/s5b348fc2dfc96.jpg" alt="" width="310px" />
+      <p>
+        图中水仙顺坡生长取斜势，<br/> 浓厚的色彩增添了鲜活的生机；
+        <br/> 参差错落的天竺直、斜之姿兼备，
+        <br/> 使画面富于变化，情趣盎然。
+        <br/>
+      </p>
+    </div>
+    <div class="txt lei">雷</div>
+    <div class="txt shen">神</div>
+    <div class="txt niu">牛</div>
+    <div class="txt bi">逼</div>
+    <img class="Thor" src="./images/Thor1.jpg" alt="">
+  </div>
+
+</body>
+
+</html>

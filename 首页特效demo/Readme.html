@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Readme</title>
+    <style>
+        html {
+            font-size: 100px;
+        }
+
+        body {
+            font-size: 0.16rem;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            background-color: #435b71;
+            color: #fff;
+        }
+
+        .box {
+            width: 3rem;
+            height: 3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: skyblue;
+        }
+
+        .link1,
+        .link2,
+        .link3,
+        .link4 {
+            display: none;
+            width: 0.05rem;
+            height: 4.25rem;
+            background-color: green;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .link2 {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .link3 {
+            width: 0.05rem;
+            height: 110%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+        }
+
+        .link3::before {
+            color: #000;
+            line-height: 0.3rem;
+            content: ".y";
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: -0.17rem;
+            left: -0.075rem;
+            border-top: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #000;
+        }
+
+        .arrows::before {
+            display: none;
+        }
+
+        .link3::after {
+            color: #000;
+            text-align: right;
+            display: none;
+            content: "y";
+            width: 0;
+            height: 0;
+            position: absolute;
+            bottom: -0.17rem;
+            left: -0.075rem;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #000;
+        }
+
+        .arrows::after {
+            display: block;
+        }
+
+
+
+        .link4 {
+            color: #000;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            width: 110%;
+            height: 0.05rem;
+        }
+
+        .link4::after {
+            content: "x";
+            width: 0;
+            height: 0;
+            position: absolute;
+            bottom: -0.075rem;
+            right: -0.17rem;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #000;
+            border-right: 10px solid transparent;
+            border-top: 10px solid transparent;
+        }
+
+        p {
+            font-weight: bold;
+            display: block;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .tip1 {
+            margin: .5rem;
+            float: left;
+        }
+
+        .tip2 {
+            float: right;
+        }
+
+        img,
+        .tipDeg {
+            width: 3.5rem;
+            opacity: .1;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: center;
+            line-height: 0.3rem;
+            border: 1px solid #fff;
+        }
+
+        .big {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.5);
+            z-index: 1;
+            opacity: 1;
+        }
+
+        .tipImg {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: .5rem;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tip1"></div>
+    <div class="tip2">
+        <img src="./images/滑动遮罩层核心算法.png" alt="">
+        <div class="tipDeg">
+            <p>总所周知一个圆是360°， 这里的360°的单位就是角度，那么什么是弧度?
+            </p>
+            <table>
+                <tr>
+                    <td>360°等于2π</td>
+                    <td>360°=2π</td>
+                </tr>
+                <tr>
+                    <td>180°等于π</td>
+                    <td>180°=π </td>
+                    <td>上面式子同时除以2</td>
+                </tr>
+                <tr>
+                    <td>1角度</td>
+                    <td>1=π/180°</td>
+                    <td>上面式子同时除以180°</td>
+                </tr>
+                <tr>
+                    <td>1弧度</td>
+                    <td> 180°/π=1</td>
+                    <td>第二条式子同时除以π</td>
+                </tr>
+        </div>
+        </table>
+    </div>
+    <div class="tipImg">
+        <p>this.offsetLeft+(width/2)<br>是到方块的中心；<br> 正方形的45°线：y=x; <br> width>height?(height/width):1 ；  <br> x<sub>1</sub>*(x>y?(y/x):1)；
+            <br> if(x>y==true)<br> y=x<sub>1</sub>*(y/x)；
+        </p>
+    </div>
+    <div class="box">
+        <div class="link1"></div>
+        <div class="link2"></div>
+        <div class="link3"></div>
+        <div class="link4"></div>
+    </div>
+    <script>
+        var box = document.querySelector('.box');
+        var link1 = document.querySelector('.link1');
+        var link2 = document.querySelector('.link2');
+        var tip = document.querySelector('.tip1');
+        var link1 = document.querySelector(".link1");
+        var link2 = document.querySelector(".link2");
+        var link3 = document.querySelector(".link3")
+        var link4 = document.querySelector(".link4");
+        var img = document.querySelector('img');
+        var tipDeg = document.querySelector(".tipDeg");
+        var tipImg = document.querySelector(".tipImg");
+
+        var amend = 45;//45度修正
+        //控制中间方块变形
+        box.onmousedown = function (e) {
+            e = e || window.event;
+            var width = box.offsetWidth;
+            var height = box.offsetHeight;
+            var pagexStart = e.pageX;
+            var pageyStart = e.pageY;
+
+            box.onmousemove = function (e) {
+                e = e || window.event;
+                var text = direction(box, e).text;
+                //改变box的长宽
+                if (text == "右") {
+                    box.style.width = width + (e.pageX - pagexStart) * 2 + "px";
+                } else if (text == "上") {
+                    box.style.height = height + (-e.pageY + pageyStart) * 2 + "px";
+                } else if (text == "左") {
+                    box.style.width = width + (-e.pageX + pagexStart) * 2 + "px";
+                } else if (text == "下") {
+                    box.style.height = height + (e.pageY - pageyStart) * 2 + "px";
+                }
+                //求到link的旋转角度
+                var linkDeg = Math.atan2(width, height) * 180 / Math.PI;
+                link1.style.transform = "translate(-50%, -50%) rotate(" + linkDeg + "deg)";
+                link2.style.transform = "translate(-50%, -50%) rotate(" + -linkDeg + "deg)";
+                //求到link的高
+                var linkheight = Math.sqrt(width * width + height * height)
+
+            }
+            box.onmouseup = function () {
+                var width = box.offsetWidth;
+                var height = box.offsetHeight;
+                //求到link的高
+                var linkheight = Math.sqrt(width * width + height * height);
+                //改变box的长宽
+                link2.style.height = link1.style.height = linkheight + "px";
+                //求到link的旋转角度
+                var linkDeg = Math.atan2(width, height) * 180 / Math.PI;
+                link1.style.transform = "translate(-50%, -50%) rotate(" + linkDeg + "deg)";
+                link2.style.transform = "translate(-50%, -50%) rotate(" + -linkDeg + "deg)";
+                //清空box鼠标移动事件
+                box.onmousemove = void (0);
+            }
+        }
+        //封装求方向的方法
+        var direction = function (ele, e) {
+            var height = ele.offsetHeight
+            var width = ele.offsetWidth;
+            var x = (e.pageX - ele.offsetLeft) * (width > height ? height / width : 1);
+            var y = (e.pageY - ele.offsetTop) * (height > width ? width / height : 1);
+            var atan2 = Math.atan2(y, x);
+            var deg = (Math.atan2(y, x) * 180 / Math.PI + amend);
+            var direction = Math.ceil(deg / 90);
+            var text = null;
+            switch (direction) {
+                case 0:
+                    text = "上";
+                    break;
+                case 1:
+                    text = "右";
+                    break;
+                case 2:
+                    text = "下";
+                    break;
+                case -1:
+                    text = "左";
+                    break;
+                case 3:
+                    text = "左";
+                    break;
+            }
+            return { x: x, y: y, atan2: atan2, deg: deg, direction: direction, text: text, amend: amend }
+        }
+        //显示右上角数据
+        document.body.onmousemove = function (e) {
+            var show = direction(box, e);
+            var removeamend = "不修正";
+            if (amend) {
+                removeamend = "修正";
+            }
+            tip.innerHTML = "<p>x:" + show.x + "</p><br><p>y:" + show.y + "</p><br><p>atan2:" + show.atan2 + "</p><br><p>deg:" + show.deg + "</p><br><p>direction:" + show.direction + "</p><br><p>倾斜角:" + removeamend + "</p>";
+            if(amend){
+                tip.innerHTML+="<br><p>方向:" + show.text + "</p>";
+            }
+        }
+        //键盘显示
+        window.onkeydown = function (e) {
+            e = e || window.event;
+            //显示交叉线
+            if (e.keyCode == 49) {
+                showme(link1);
+                showme(link2);
+            }
+            //显示坐标轴
+            if (e.keyCode == 50) {
+                showme(link3);
+                showme(link4);
+            }
+            //是否修正倾斜角
+            if (e.keyCode == 51) {
+                if (amend == 0) {
+                    amend = 45;
+                } else {
+                    amend = 0;
+                }
+            }
+        }
+        //右侧图中间放大显示
+        var showcenter = function () {
+            this.classList.toggle("big");
+            showme(box);
+            showme(tip);
+            if (img.classList.contains("big")) {
+                img.onclick = function () {
+                    showme(tipImg);
+                }
+            } else {
+                img.onclick = void (0);
+            }
+            //隐藏图片的提示
+            if (!(document.querySelector(".big"))) {
+                tipImg.style.display = "none";
+            }
+        }
+        img.ondblclick = showcenter;
+        tipDeg.ondblclick = showcenter;
+        // y轴换箭头
+        link3.onclick = function () {
+            link3.classList.toggle("arrows");
+        }
+        //封装显示隐藏的函数
+        var showme = function (ele) {
+            if (ele.style.display == "none") {
+                ele.style.display = "block";
+            } else {
+                ele.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
