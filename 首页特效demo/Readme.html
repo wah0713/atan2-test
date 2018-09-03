@@ -337,8 +337,8 @@
         //右侧图中间放大显示
         var showcenter = function () {
             this.classList.toggle("big");
-            showme(box);
-            showme(tip);
+            hideme(box);
+            hideme(tip);
             if (img.classList.contains("big")) {
                 img.onclick = function () {
                     showme(tipImg);
@@ -358,11 +358,18 @@
             link3.classList.toggle("arrows");
         }
         //封装显示隐藏的函数
-        var showme = function (ele) {
+        var hideme = function (ele) {
             if (ele.style.display == "none") {
                 ele.style.display = "block";
             } else {
                 ele.style.display = "none";
+            }
+        }
+        var showme = function (ele) {
+            if (ele.style.display == "block") {
+                ele.style.display = "none";
+            } else {
+                ele.style.display = "block";
             }
         }
 
